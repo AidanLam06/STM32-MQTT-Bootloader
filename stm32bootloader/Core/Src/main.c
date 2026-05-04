@@ -21,7 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "flash_layout.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -58,6 +58,36 @@ static void MX_USART1_UART_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+typedef void (*pFunction)(void);
+
+void jumpToApplication(void) {
+	uint32_t appStack;
+	uint32_t appResetHandler;
+	pFunction appEntry;
+
+	/* Read application stack pointer */
+	appStack = *(volatile uint32_t*)APP_START_ADDR;
+
+	/* Read reset handler address */
+	appResetHandler = *(volatile uint32_t*)(APP_START_ADDR + 4);
+	appEntry = (pFunction)appResetHandler;
+
+	HAL_UART_Transmit(&huart2, (uint8_t *)"Jumping to App\r\n", 16, 100);
+	while (__HAL_UART_GET_FLAG(&huart2, UART_FLAG_TC) == RESET);
+
+	__disable_irq();
+
+	/* Stop SysTick */
+	SysTick->CTRL = 0;
+	SysTick->LOAD = 0;
+	SysTick->VAL = 0;
+
+	/* Set main stack pointer */
+	__set_MSP(appStack);
+
+	/* Jump to app reset handler */
+	appEntry();
+}
 
 /* USER CODE END 0 */
 
@@ -93,13 +123,13 @@ int main(void)
   MX_USART2_UART_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-
-  /* USER CODE END 2 */
-
   HAL_Delay(100);
 
-  HAL_UART_Transmit(&huart1, (uint8_t *)"Inside Bootloader\r\n", 21, 100)
+  HAL_UART_Transmit(&huart2, (uint8_t *)"Inside Bootloader\r\n", 21, 100);
+  while (__HAL_UART_GET_FLAG(&huart2, UART_FLAG_TC) == RESET);
+
   jumpToApplication();
+  /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
@@ -108,8 +138,8 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_PIN);
-	HAL_Delay(1000);
+	  HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+	  HAL_Delay(1000);
   }
   /* USER CODE END 3 */
 }

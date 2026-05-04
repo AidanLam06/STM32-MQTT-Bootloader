@@ -1,0 +1,202 @@
+!SESSION 2026-05-01 15:13:50.410 -----------------------------------------------
+eclipse.buildId=Version 2.1.1
+java.version=21.0.9
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_CA
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2026-05-01 15:14:05.753
+!MESSAGE Log4j2 initialized with config file C:\Projects\C Projects\STM32-MQTT-Bootloader\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2026-05-01 15:14:08.022
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-05-01 15:14:09.331
+!MESSAGE Executed PowerShell command powershell.exe -Command "Get-CimInstance -ClassName Win32_SerialPort | Select-Object -ExpandProperty DeviceID":
+COM3
+
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-05-01 15:14:09.332
+!MESSAGE port: COM3
+!SESSION 2026-05-01 15:19:31.790 -----------------------------------------------
+eclipse.buildId=Version 2.1.1
+java.version=21.0.9
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_CA
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2026-05-01 15:19:38.795
+!MESSAGE Log4j2 initialized with config file C:\Projects\C Projects\STM32-MQTT-Bootloader\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2026-05-01 15:19:41.136
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-05-01 15:19:42.466
+!MESSAGE Executed PowerShell command powershell.exe -Command "Get-CimInstance -ClassName Win32_SerialPort | Select-Object -ExpandProperty DeviceID":
+COM3
+
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-05-01 15:19:42.468
+!MESSAGE port: COM3
+
+!ENTRY org.eclipse.cdt.core 1 0 2026-05-01 15:23:13.881
+!MESSAGE Indexed 'stm32bootloader' (24 sources, 119 headers) in 2.84 sec: 11,479 declarations; 51,830 references; 3 unresolved inclusions; 47 syntax errors; 170 unresolved names (0.27%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2026-05-01 15:31:11.780
+!MESSAGE Indexed 'stm32bootloader' (24 sources, 119 headers) in 1.25 sec: 11,479 declarations; 51,833 references; 3 unresolved inclusions; 46 syntax errors; 169 unresolved names (0.27%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2026-05-01 15:31:15.889
+!MESSAGE Indexed 'stm32bootloader' (24 sources, 119 headers) in 1.2 sec: 11,479 declarations; 51,833 references; 3 unresolved inclusions; 46 syntax errors; 169 unresolved names (0.27%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2026-05-01 15:49:30.259
+!MESSAGE Indexed 'stm32app' (23 sources, 117 headers) in 1.19 sec: 11,472 declarations; 51,776 references; 3 unresolved inclusions; 46 syntax errors; 171 unresolved names (0.27%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2026-05-01 15:54:47.024
+!MESSAGE Indexed 'stm32app' (25 sources, 119 headers) in 1.33 sec: 11,591 declarations; 56,318 references; 3 unresolved inclusions; 46 syntax errors; 174 unresolved names (0.26%)
+!SESSION 2026-05-01 16:08:59.081 -----------------------------------------------
+eclipse.buildId=Version 2.1.1
+java.version=21.0.9
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_CA
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2026-05-01 16:09:04.106
+!MESSAGE Log4j2 initialized with config file C:\Projects\C Projects\STM32-MQTT-Bootloader\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2026-05-01 16:09:08.478
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-05-01 16:09:08.506
+!MESSAGE Executed PowerShell command powershell.exe -Command "Get-CimInstance -ClassName Win32_SerialPort | Select-Object -ExpandProperty DeviceID":
+COM3
+
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-05-01 16:09:08.509
+!MESSAGE port: COM3
+!SESSION 2026-05-01 16:15:48.840 -----------------------------------------------
+eclipse.buildId=Version 2.1.1
+java.version=21.0.9
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_CA
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2026-05-01 16:15:53.938
+!MESSAGE Log4j2 initialized with config file C:\Projects\C Projects\STM32-MQTT-Bootloader\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-05-01 16:15:58.382
+!MESSAGE Executed PowerShell command powershell.exe -Command "Get-CimInstance -ClassName Win32_SerialPort | Select-Object -ExpandProperty DeviceID":
+COM3
+
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-05-01 16:15:58.385
+!MESSAGE port: COM3
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2026-05-01 16:15:58.502
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-05-01 16:30:44.366
+!MESSAGE Executed PowerShell command powershell.exe -Command "Get-CimInstance -ClassName Win32_SerialPort | Select-Object -ExpandProperty DeviceID":
+
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-05-01 16:30:44.369
+!MESSAGE port: 
+!SESSION 2026-05-02 03:57:35.892 -----------------------------------------------
+eclipse.buildId=Version 2.1.1
+java.version=21.0.9
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_CA
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY org.eclipse.core.resources 2 10035 2026-05-02 03:57:38.915
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2026-05-02 03:57:41.206
+!MESSAGE Log4j2 initialized with config file C:\Projects\C Projects\STM32-MQTT-Bootloader\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2026-05-02 03:57:46.491
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-05-02 03:57:46.624
+!MESSAGE Executed PowerShell command powershell.exe -Command "Get-CimInstance -ClassName Win32_SerialPort | Select-Object -ExpandProperty DeviceID":
+COM3
+
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-05-02 03:57:46.627
+!MESSAGE port: COM3
+!SESSION 2026-05-02 03:59:25.579 -----------------------------------------------
+eclipse.buildId=Version 2.1.1
+java.version=21.0.9
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_CA
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2026-05-02 03:59:32.867
+!MESSAGE Log4j2 initialized with config file C:\Projects\C Projects\STM32-MQTT-Bootloader\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-05-02 03:59:37.690
+!MESSAGE Executed PowerShell command powershell.exe -Command "Get-CimInstance -ClassName Win32_SerialPort | Select-Object -ExpandProperty DeviceID":
+COM3
+
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-05-02 03:59:37.693
+!MESSAGE port: COM3
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2026-05-02 03:59:37.696
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-05-02 04:13:36.660
+!MESSAGE Executed PowerShell command powershell.exe -Command "Get-CimInstance -ClassName Win32_SerialPort | Select-Object -ExpandProperty DeviceID":
+
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-05-02 04:13:36.663
+!MESSAGE port: 
+!SESSION 2026-05-02 23:31:18.080 -----------------------------------------------
+eclipse.buildId=Version 2.1.1
+java.version=21.0.9
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_CA
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY org.eclipse.core.resources 2 10035 2026-05-02 23:31:28.668
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2026-05-02 23:31:34.502
+!MESSAGE Log4j2 initialized with config file C:\Projects\C Projects\STM32-MQTT-Bootloader\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2026-05-02 23:31:40.871
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-05-02 23:31:41.224
+!MESSAGE Executed PowerShell command powershell.exe -Command "Get-CimInstance -ClassName Win32_SerialPort | Select-Object -ExpandProperty DeviceID":
+
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-05-02 23:31:41.227
+!MESSAGE port: 
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-05-03 00:05:37.025
+!MESSAGE Executed PowerShell command powershell.exe -Command "Get-CimInstance -ClassName Win32_SerialPort | Select-Object -ExpandProperty DeviceID":
+COM3
+
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-05-03 00:05:37.029
+!MESSAGE port: COM3
+!SESSION 2026-05-03 00:23:37.845 -----------------------------------------------
+eclipse.buildId=Version 2.1.1
+java.version=21.0.9
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_CA
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2026-05-03 00:23:42.193
+!MESSAGE Log4j2 initialized with config file C:\Projects\C Projects\STM32-MQTT-Bootloader\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2026-05-03 00:23:47.144
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-05-03 00:23:47.214
+!MESSAGE Executed PowerShell command powershell.exe -Command "Get-CimInstance -ClassName Win32_SerialPort | Select-Object -ExpandProperty DeviceID":
+COM3
+
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-05-03 00:23:47.216
+!MESSAGE port: COM3

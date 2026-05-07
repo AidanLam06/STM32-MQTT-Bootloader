@@ -1,0 +1,2 @@
+source /home/alam/Projects/STM32-MQTT-Bootloader/esp32mm/build/bootloader/gdbinit/symbols
+source /home/alam/Projects/STM32-MQTT-Bootloader/esp32mm/build/bootloader/gdbinit/connect

@@ -1,53 +1,74 @@
 #include <cstdio>
-
-#include "esp_log.h"
-#include "driver/uart.h"
-#include "driver/gpio.h"
+#include <cstring>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "esp_log.h"
 
-static const char *TAG = "UART_LOG";
+#include "shared_protocol.h"
+#include "uart.hpp"
 
-class UART {
-private:
-    uart_port_t uart_num;
-public:
-    // Constructor: Initialize UART port with specified pins and baud rate
-    UART(uart_port_t uart_num, int tx_pin, int rx_pin, int baud_rate) : uart_num(uart_num) {
-        uart_config_t uart_config = {};
-        uart_config.baud_rate = baud_rate;
-        uart_config.data_bits = UART_DATA_8_BITS;
-        uart_config.parity = UART_PARITY_DISABLE;
-        uart_config.stop_bits = UART_STOP_BITS_1;
-        uart_config.flow_ctrl = UART_HW_FLOWCTRL_DISABLE;
+static const char *TAG = "OTA_TEST";
 
-        ESP_ERROR_CHECK(uart_param_config(uart_num, &uart_config));
-        ESP_ERROR_CHECK(uart_set_pin(uart_num, tx_pin, rx_pin, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE));
-        ESP_ERROR_CHECK(uart_driver_install(uart_num, 1024 * 2, 0, 0, NULL, 0));
-    }
-
-    void sendData(const char *data) {
-        int len = uart_write_bytes(uart_num, data, strlen(data));
-        ESP_LOGI(TAG, "Sent %d bytes: %s", len, data);
-    }
-
-    void receiveData() {
-        uint8_t data[256];
-        int length = uart_read_bytes(uart_num, data, sizeof(data) - 1, 100 / portTICK_PERIOD_MS);
-        if (length > 0) {
-            data[length] = '\0';
-            ESP_LOGI(TAG, "Received: %s", data);
+// A simple CRC32 implementation to match the STM32 side
+uint32_t calculate_crc32(const uint8_t *data, size_t len) {
+    uint32_t crc = 0xFFFFFFFF;
+    for (size_t i = 0; i < len; i++) {
+        crc ^= data[i];
+        for (int j = 0; j < 8; j++) {
+            crc = (crc >> 1) ^ (0xEDB88320 & (-(crc & 1)));
         }
     }
-};
+    return ~crc;
+}
 
 extern "C" void app_main(void) {
-    // Initialize UART1 on GPIO 17 (TX) and GPIO 16 (RX) at 115200 baud
-    UART uart(UART_NUM_1, GPIO_NUM_17, GPIO_NUM_16, 115200);
+    // 1. Initialize our UART Class
+    // GPIO 17 (TX), GPIO 16 (RX)
+    UART uart(UART_NUM_1, 17, 16, 115200);
+
+    ESP_LOGI(TAG, "Starting UART Protocol Test...");
+
+    // 2. Prepare a Dummy Data Packet
+    OTA_Packet_t test_packet;
+    memset(&test_packet, 0, sizeof(OTA_Packet_t));
+
+    test_packet.start_byte = 0xAA;
+    test_packet.type = PACKET_TYPE_DATA;
+    test_packet.block_num = 1;
+    test_packet.len = 512;
+
+    // Fill payload with a recognizable pattern (0, 1, 2, 3...)
+    for (int i = 0; i < 512; i++) {
+        test_packet.payload[i] = (uint8_t)(i % 256);
+    }
+
+    // 3. Calculate CRC (everything in the struct EXCEPT the crc field itself)
+    test_packet.crc = calculate_crc32((uint8_t*)&test_packet, offsetof(OTA_Packet_t, crc));
 
     while (true) {
-        uart.sendData("Hello, UART!\n");
-        uart.receiveData();
-        vTaskDelay(2000 / portTICK_PERIOD_MS);
+        ESP_LOGI(TAG, "Sending Packet Block %lu (Size: %u bytes)...", 
+                 test_packet.block_num, sizeof(OTA_Packet_t));
+
+        // 4. Send the raw bytes of the struct
+        uart.sendData((uint8_t*)&test_packet, sizeof(OTA_Packet_t));
+
+        // 5. Wait for Response (ACK = 0x79, NACK = 0x1F)
+        uint8_t response = 0;
+        int rx_len = uart.receiveData(&response, 1, 2000); // 2 second timeout for Flash write
+
+        if (rx_len > 0) {
+            if (response == 0x79) {
+                ESP_LOGI(TAG, "SUCCESS: STM32 sent ACK! Flash write verified.");
+            } else if (response == 0x1F) {
+                ESP_LOGE(TAG, "FAILED: STM32 sent NACK! Checksum or Start Byte mismatch.");
+            } else {
+                ESP_LOGW(TAG, "UNKNOWN: Received unexpected byte: 0x%02X", response);
+            }
+        } else {
+            ESP_LOGE(TAG, "TIMEOUT: No response from STM32 within 2 seconds.");
+        }
+
+        // Wait 5 seconds before the next test loop
+        vTaskDelay(pdMS_TO_TICKS(5000));
     }
 }

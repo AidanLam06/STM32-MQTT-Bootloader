@@ -6,3 +6,6 @@ CompileFlags:
     - -fno-tree-switch-conversion
     - -n
     - -mfix-esp32-erratum-32
+
+Index:
+  Background: Build

@@ -1,7 +1,7 @@
 {
     "version":            "1.3",
     "project_name":       "esp32mm",
-    "project_version":    "3f54d92-dirty",
+    "project_version":    "674c7c9-dirty",
     "project_path":       "/home/alam/Projects/STM32-MQTT-Bootloader/esp32mm",
     "idf_path":           "/home/alam/esp-idf",
     "build_dir":          "/home/alam/Projects/STM32-MQTT-Bootloader/esp32mm/build",
@@ -1870,8 +1870,8 @@
             "managed_reqs": [],
             "managed_priv_reqs": [],
             "file": "/home/alam/Projects/STM32-MQTT-Bootloader/esp32mm/build/esp-idf/main/libmain.a",
-            "sources": [ "/home/alam/Projects/STM32-MQTT-Bootloader/esp32mm/main/main.cpp" ],
-            "include_dirs": [ "." ]
+            "sources": [ "/home/alam/Projects/STM32-MQTT-Bootloader/esp32mm/main/main.cpp", "/home/alam/Projects/STM32-MQTT-Bootloader/esp32mm/main/uart.cpp" ],
+            "include_dirs": [ ".", "include", "../../shared" ]
         },
         "mbedtls": {
             "alias": "idf::mbedtls",
@@ -4099,7 +4099,7 @@
             "priv_reqs": [],
             "managed_reqs": [],
             "managed_priv_reqs": [],
-            "include_dirs": [ "." ]
+            "include_dirs": [ ".", "include", "../../shared" ]
         }
     },
     "gdbinit_files": {

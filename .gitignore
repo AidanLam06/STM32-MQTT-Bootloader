@@ -1,57 +1,49 @@
-# Prerequisites
-*.d
-
-*.bin
-
-# Object files
+# ==========================================
+# Build Artifacts
+# ==========================================
+build/
+bin/
+obj/
 *.o
-*.ko
 *.obj
 *.elf
-
-# Linker output
-*.ilk
 *.map
-*.exp
+*.d
+*.su
 
-# Precompiled Headers
-*.gch
-*.pch
+# ==========================================
+# ESP-IDF Specific
+# ==========================================
+sdkconfig.old
+managed_components/
+dependencies.lock
+# We keep 'sdkconfig' so your ESP32 settings are saved
 
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
-
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
-
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
+# ==========================================
+# STM32 / IDE Specific
+# ==========================================
+.mxproject
+*.launch
+*.user
+*.administrator
+*.local
+# If you want to save your STM32 .bin/hex files, comment these out:
+*.bin
 *.hex
 
-# Debug files
-*.dSYM/
-*.su
-*.idb
-*.pdb
+# ==========================================
+# Language Server & Tooling (Crucial)
+# ==========================================
+.clangd/
+.cache/
+.vscode/
+compile_commands.json
+.gdb_history
+.gdbinit
 
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
-
-# debug information files
-*.dwo
+# ==========================================
+# Python / System
+# ==========================================
+__pycache__/
+.DS_Store
+Thumbs.db

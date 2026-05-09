@@ -128,19 +128,7 @@ int main(void)
   HAL_UART_Transmit(&huart2, (uint8_t *)"Inside Bootloader\r\n", 21, 100);
   while (__HAL_UART_GET_FLAG(&huart2, UART_FLAG_TC) == RESET);
 
-  uint8_t rx_buffer[1];
-  HAL_StatusTypeDef status = HAL_UART_Receive(&huart1, rx_buffer, 1, 2000);
-
-  if (status == HAL_OK && rx_buffer[0] == 0xAA) {
-	  HAL_UART_Transmit(&huart2, (uint8_t *)"Update Packet Detected\r\n", 25, 100);
-
-	  uint8_t ack = 0x79;
-	  HAL_UART_Transmit(&huart1, &ack, 1, 100);
-	  // add update mode code below this comment
-  } else {
-	  HAL_UART_Transmit(&huart2, (uint8_t *)"No UART traffic. Booting App\rn\n", 25, 100);
-	  jumpToApplication();
-  }
+  jumpToApplication();
   /* USER CODE END 2 */
 
   /* Infinite loop */

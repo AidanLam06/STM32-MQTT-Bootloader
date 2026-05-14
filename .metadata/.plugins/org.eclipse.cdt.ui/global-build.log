@@ -383,3 +383,148 @@ Finished building: stm32bootloader.bin
  
 Finished building: stm32bootloader.list
  
+23:30:10 **** Incremental Build of configuration Debug for project stm32app ****
+make -j16 all 
+arm-none-eabi-size  stm32app.elf 
+   text	   data	    bss	    dec	    hex	filename
+  13080	     12	   1844	  14936	   3a58	stm32app.elf
+Finished building: default.size.stdout
+ 
+23:30:10 **** Incremental Build of configuration Debug for project stm32bootloader ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L476xx -c -I../Core/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "stm32bootloader.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Projects\C Projects\STM32-MQTT-Bootloader\stm32bootloader\STM32L476XX_FLASH.ld" --specs=nosys.specs -Wl,-Map="stm32bootloader.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: stm32bootloader.elf
+ 
+arm-none-eabi-size  stm32bootloader.elf 
+arm-none-eabi-objdump -h -S stm32bootloader.elf  > "stm32bootloader.list"
+arm-none-eabi-objcopy  -O binary stm32bootloader.elf  "stm32bootloader.bin"
+   text	   data	    bss	    dec	    hex	filename
+  13920	     16	   1840	  15776	   3da0	stm32bootloader.elf
+Finished building: default.size.stdout
+ 
+Finished building: stm32bootloader.bin
+ 
+Finished building: stm32bootloader.list
+ 
+23:32:24 **** Incremental Build of configuration Debug for project stm32app ****
+make -j16 all 
+arm-none-eabi-size  stm32app.elf 
+   text	   data	    bss	    dec	    hex	filename
+  13080	     12	   1844	  14936	   3a58	stm32app.elf
+Finished building: default.size.stdout
+ 
+23:32:25 **** Incremental Build of configuration Debug for project stm32bootloader ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L476xx -c -I../Core/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "stm32bootloader.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Projects\C Projects\STM32-MQTT-Bootloader\stm32bootloader\STM32L476XX_FLASH.ld" --specs=nosys.specs -Wl,-Map="stm32bootloader.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: stm32bootloader.elf
+ 
+arm-none-eabi-size  stm32bootloader.elf 
+arm-none-eabi-objdump -h -S stm32bootloader.elf  > "stm32bootloader.list"
+   text	   data	    bss	    dec	    hex	filename
+  13936	     16	   1840	  15792	   3db0	stm32bootloader.elf
+arm-none-eabi-objcopy  -O binary stm32bootloader.elf  "stm32bootloader.bin"
+Finished building: default.size.stdout
+ 
+Finished building: stm32bootloader.list
+Finished building: stm32bootloader.bin
+ 
+ 
+23:33:58 **** Incremental Build of configuration Debug for project stm32app ****
+make -j16 all 
+arm-none-eabi-size  stm32app.elf 
+   text	   data	    bss	    dec	    hex	filename
+  13080	     12	   1844	  14936	   3a58	stm32app.elf
+Finished building: default.size.stdout
+ 
+23:33:59 **** Incremental Build of configuration Debug for project stm32bootloader ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L476xx -c -I../Core/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "stm32bootloader.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Projects\C Projects\STM32-MQTT-Bootloader\stm32bootloader\STM32L476XX_FLASH.ld" --specs=nosys.specs -Wl,-Map="stm32bootloader.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: stm32bootloader.elf
+ 
+arm-none-eabi-size  stm32bootloader.elf 
+arm-none-eabi-objdump -h -S stm32bootloader.elf  > "stm32bootloader.list"
+arm-none-eabi-objcopy  -O binary stm32bootloader.elf  "stm32bootloader.bin"
+   text	   data	    bss	    dec	    hex	filename
+  13936	     16	   1840	  15792	   3db0	stm32bootloader.elf
+Finished building: default.size.stdout
+ 
+Finished building: stm32bootloader.bin
+Finished building: stm32bootloader.list
+ 
+ 
+23:37:34 **** Incremental Build of configuration Debug for project stm32app ****
+make -j16 all 
+arm-none-eabi-size  stm32app.elf 
+   text	   data	    bss	    dec	    hex	filename
+  13080	     12	   1844	  14936	   3a58	stm32app.elf
+Finished building: default.size.stdout
+ 
+23:37:35 **** Incremental Build of configuration Debug for project stm32bootloader ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L476xx -c -I../Core/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "stm32bootloader.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Projects\C Projects\STM32-MQTT-Bootloader\stm32bootloader\STM32L476XX_FLASH.ld" --specs=nosys.specs -Wl,-Map="stm32bootloader.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: stm32bootloader.elf
+ 
+arm-none-eabi-size  stm32bootloader.elf 
+arm-none-eabi-objdump -h -S stm32bootloader.elf  > "stm32bootloader.list"
+arm-none-eabi-objcopy  -O binary stm32bootloader.elf  "stm32bootloader.bin"
+   text	   data	    bss	    dec	    hex	filename
+  13952	     16	   1840	  15808	   3dc0	stm32bootloader.elf
+Finished building: default.size.stdout
+ 
+Finished building: stm32bootloader.bin
+Finished building: stm32bootloader.list
+ 
+ 
+23:54:18 **** Incremental Build of configuration Debug for project stm32app ****
+make -j16 all 
+arm-none-eabi-size  stm32app.elf 
+   text	   data	    bss	    dec	    hex	filename
+  13080	     12	   1844	  14936	   3a58	stm32app.elf
+Finished building: default.size.stdout
+ 
+23:54:19 **** Incremental Build of configuration Debug for project stm32bootloader ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L476xx -c -I../Core/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/stm32l4xx_hal_msp.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L476xx -c -I../Core/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32l4xx_hal_msp.d" -MT"Core/Src/stm32l4xx_hal_msp.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32l4xx_hal_msp.o"
+arm-none-eabi-gcc -o "stm32bootloader.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Projects\C Projects\STM32-MQTT-Bootloader\stm32bootloader\STM32L476XX_FLASH.ld" --specs=nosys.specs -Wl,-Map="stm32bootloader.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: stm32bootloader.elf
+ 
+arm-none-eabi-size  stm32bootloader.elf 
+arm-none-eabi-objdump -h -S stm32bootloader.elf  > "stm32bootloader.list"
+arm-none-eabi-objcopy  -O binary stm32bootloader.elf  "stm32bootloader.bin"
+   text	   data	    bss	    dec	    hex	filename
+  13960	     16	   1840	  15816	   3dc8	stm32bootloader.elf
+Finished building: default.size.stdout
+ 
+Finished building: stm32bootloader.bin
+ 
+Finished building: stm32bootloader.list
+ 
+00:16:03 **** Incremental Build of configuration Debug for project stm32app ****
+make -j16 all 
+arm-none-eabi-size  stm32app.elf 
+   text	   data	    bss	    dec	    hex	filename
+  13080	     12	   1844	  14936	   3a58	stm32app.elf
+Finished building: default.size.stdout
+ 
+00:16:04 **** Incremental Build of configuration Debug for project stm32bootloader ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L476xx -c -I../Core/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "stm32bootloader.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Projects\C Projects\STM32-MQTT-Bootloader\stm32bootloader\STM32L476XX_FLASH.ld" --specs=nosys.specs -Wl,-Map="stm32bootloader.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: stm32bootloader.elf
+ 
+arm-none-eabi-size  stm32bootloader.elf 
+arm-none-eabi-objdump -h -S stm32bootloader.elf  > "stm32bootloader.list"
+   text	   data	    bss	    dec	    hex	filename
+  13960	     16	   1840	  15816	   3dc8	stm32bootloader.elf
+arm-none-eabi-objcopy  -O binary stm32bootloader.elf  "stm32bootloader.bin"
+Finished building: default.size.stdout
+ 
+Finished building: stm32bootloader.list
+Finished building: stm32bootloader.bin
+ 
+ 

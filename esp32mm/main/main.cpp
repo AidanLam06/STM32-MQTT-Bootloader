@@ -1,9 +1,11 @@
 #include <cstdio>
 #include <cstring>
+#include "driver/gpio.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "esp_log.h"
 
+#include "hal/gpio_types.h"
 #include "shared_protocol.h"
 #include "uart.hpp"
 
@@ -20,7 +22,7 @@ uint32_t calculate_crc32(const uint8_t *data, size_t len) {
     }
     return ~crc;
 }
-
+/*
 extern "C" void app_main(void) {
     // 1. Initialize our UART Class
     // GPIO 17 (TX), GPIO 16 (RX)
@@ -70,5 +72,52 @@ extern "C" void app_main(void) {
 
         // Wait 5 seconds before the next test loop
         vTaskDelay(pdMS_TO_TICKS(5000));
+    }
+}
+*/
+
+
+extern "C" void app_main(void) {
+    // 1. Initialize UART (Keep your existing config)
+    UART uart(UART_NUM_1, 17, 16, 115200);
+
+    gpio_set_pull_mode((gpio_num_t)16, GPIO_PULLUP_ONLY);
+    gpio_set_pull_mode((gpio_num_t)17, GPIO_PULLUP_ONLY);
+
+    ESP_LOGI(TAG, "Starting UART Handshake Test...");
+
+    while (true) {
+        ESP_LOGI(TAG, "Sending Sync Byte (0xAA)...");
+
+        // 2. Send ONLY the start byte
+        uint8_t sync_byte = 0xAA;
+        uart.sendData(&sync_byte, 1);
+
+        // 3. Wait for ACK (0x79) from STM32
+        uint8_t response = 0;
+        // 5-second timeout gives you plenty of time to hit the STM32 reset button
+        int rx_len = uart.receiveData(&response, 1, 5000); 
+
+        if (rx_len > 0) {
+            if (response == 0x79) {
+                ESP_LOGI(TAG, "SUCCESS: STM32 ack");
+                break;
+                
+                // 4. Stop and stay here so the log doesn't scroll away
+                /*
+                while(1) {
+                    vTaskDelay(pdMS_TO_TICKS(1000));
+                }
+                */
+                
+            } else {
+                ESP_LOGW(TAG, "Received unexpected response: 0x%02X", response);
+            }
+        } else {
+            ESP_LOGE(TAG, "TIMEOUT: No 0x79 received. Retrying in 2 seconds...");
+        }
+
+        // Wait before the next attempt
+        vTaskDelay(pdMS_TO_TICKS(2000));
     }
 }

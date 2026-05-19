@@ -159,10 +159,12 @@ int main(void)
 	  if (status == HAL_OK) { // need to also add &&
 		  HAL_UART_Transmit(&huart2, (uint8_t *)"Received UART Traffic\r\n", 25, 100);
 		  while (__HAL_UART_GET_FLAG(&huart2, UART_FLAG_TC) == RESET);
+		  if (verify_crc(&packet_buffer) == 1) {
+
+		  }
 		  uint8_t ack = 0x79;
 		  HAL_UART_Transmit(&huart1, &ack, 1, 100);
 		  // add update mode code below this comment, prolly while loop and break when PACKET_TYPE_STOP detected
-		  // make sure to add verify_crc() call for this
 		  // flash function needed here, pass the block_num and data
 	  } else {
 		  if (status == HAL_TIMEOUT) {

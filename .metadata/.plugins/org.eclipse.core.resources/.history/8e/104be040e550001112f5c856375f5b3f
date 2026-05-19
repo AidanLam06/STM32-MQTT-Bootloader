@@ -40,8 +40,6 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-CRC_HandleTypeDef hcrc;
-
 UART_HandleTypeDef huart1;
 UART_HandleTypeDef huart2;
 
@@ -54,7 +52,6 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_USART1_UART_Init(void);
-static void MX_CRC_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -92,27 +89,6 @@ void jumpToApplication(void) {
 	appEntry();
 }
 
-CRC_HandleTypeDef hcrc;
-
-void MX_CRC_Init(void) {
-  hcrc.Instance = CRC;
-  hcrc.Init.DefaultPolynomialUse = DEFAULT_POLYNORMIAL_ENABLE; // 0X04C11DB7
-  hcrc.Init.DefaultInitValueUse = DEFAULT_INIT_VALUE_ENABLE; // 0XFFFFFFFF
-  hcrc.Init.InputDataInversionMode = CRC_INPUTDATA_INVERSION_NONE;
-  hcrc.Init.OutputDataInversionMode = CRC_OUTPUTDATA_INVERSION_DISABLE;
-
-  hcrc.InputDataFormat = CRC_INPUTDATA_FORMAT_BYTES;
-
-  if (HAL_CRC_Init(&hcrc) != HAL_OK) {
-	  Error_Handler();
-  }
-}
-
-uint8_t verify_crc(OTA_Packet_t *packet) {
-	uint32_t calculated = HAL_CRC_Calculate(&hcrc, (uint32_t*)packet, 522);
-	return (calculated == packet->crc) ? 0 : 1;
-}
-
 /* USER CODE END 0 */
 
 /**
@@ -146,44 +122,33 @@ int main(void)
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   MX_USART1_UART_Init();
-  MX_CRC_Init();
   /* USER CODE BEGIN 2 */
   HAL_Delay(100);
-  static OTA_Packet_t packet_buffer;
 
   HAL_UART_Transmit(&huart2, (uint8_t *)"Inside Bootloader\r\n", 21, 100);
   while (__HAL_UART_GET_FLAG(&huart2, UART_FLAG_TC) == RESET);
 
-  HAL_StatusTypeDef status = HAL_UART_Receive(&huart1, buffer, 526, 5000);
-  if (packet_buffer.type == PACKET_TYPE_START) {
-	  if (status == HAL_OK) { // need to also add &&
-		  HAL_UART_Transmit(&huart2, (uint8_t *)"Received UART Traffic\r\n", 25, 100);
-		  while (__HAL_UART_GET_FLAG(&huart2, UART_FLAG_TC) == RESET);
-		  uint8_t ack = 0x79;
-		  HAL_UART_Transmit(&huart1, &ack, 1, 100);
-		  // add update mode code below this comment, prolly while loop and break when PACKET_TYPE_STOP detected
-		  // make sure to add verify_crc() call for this
-		  // flash function needed here, pass the block_num and data
-	  } else {
-		  if (status == HAL_TIMEOUT) {
-			  HAL_UART_Transmit(&huart2, (uint8_t *)"Error: Real Timeout\r\n", 21, 100);
-		  } else if (status == HAL_ERROR) {
-			  HAL_UART_Transmit(&huart2, (uint8_t *)"Error: Hardware/HAL Error\r\n", 27, 100);
-		  } else if (status == HAL_BUSY) {
-			  HAL_UART_Transmit(&huart2, (uint8_t *)"Error: Peripheral Busy\r\n", 24, 100);
-		  }
-		  //while (__HAL_UART_GET_FLAG(&huart2, UART_FLAG_TC) == RESET);
-		  HAL_UART_Transmit(&huart2, (uint8_t*)"No UART acitivity detected. Booting App..\r\n", 43, 100);
-		  //while (__HAL_UART_GET_FLAG(&huart2, UART_FLAG_TC) == RESET);
-		  jumpToApplication();
-		}
-  }
-  else {
-	  HAL_UART_Transmit(&huart2, (uint8_t*)"No UART acitivity detected. Booting App..\r\n", 43, 100);
-	  //while (__HAL_UART_GET_FLAG(&huart2, UART_FLAG_TC) == RESET);
-	  jumpToApplication();
-  }
+  uint8_t rx_buffer[1] = {0x00};
+  HAL_StatusTypeDef status = HAL_UART_Receive(&huart1, rx_buffer, 1, 5000);
 
+  if (status == HAL_OK && rx_buffer[0] == 0xAA) {
+	  HAL_UART_Transmit(&huart2, (uint8_t *)"Received UART Traffic\r\n", 25, 100);
+	  while (__HAL_UART_GET_FLAG(&huart2, UART_FLAG_TC) == RESET);
+	  //crc check would prolly go here
+	  uint8_t ack = 0x79;
+	  HAL_UART_Transmit(&huart1, &ack, 1, 100);
+	  // add update mode code below this comment
+  } else {
+      if (status == HAL_TIMEOUT) {
+          HAL_UART_Transmit(&huart2, (uint8_t *)"Error: Real Timeout\r\n", 21, 100);
+      } else if (status == HAL_ERROR) {
+          HAL_UART_Transmit(&huart2, (uint8_t *)"Error: Hardware/HAL Error\r\n", 27, 100);
+      } else if (status == HAL_BUSY) {
+          HAL_UART_Transmit(&huart2, (uint8_t *)"Error: Peripheral Busy\r\n", 24, 100);
+      }
+      while (__HAL_UART_GET_FLAG(&huart2, UART_FLAG_TC) == RESET);
+      jumpToApplication();
+  }
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -246,37 +211,6 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-}
-
-/**
-  * @brief CRC Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_CRC_Init(void)
-{
-
-  /* USER CODE BEGIN CRC_Init 0 */
-
-  /* USER CODE END CRC_Init 0 */
-
-  /* USER CODE BEGIN CRC_Init 1 */
-
-  /* USER CODE END CRC_Init 1 */
-  hcrc.Instance = CRC;
-  hcrc.Init.DefaultPolynomialUse = DEFAULT_POLYNOMIAL_ENABLE;
-  hcrc.Init.DefaultInitValueUse = DEFAULT_INIT_VALUE_ENABLE;
-  hcrc.Init.InputDataInversionMode = CRC_INPUTDATA_INVERSION_NONE;
-  hcrc.Init.OutputDataInversionMode = CRC_OUTPUTDATA_INVERSION_DISABLE;
-  hcrc.InputDataFormat = CRC_INPUTDATA_FORMAT_BYTES;
-  if (HAL_CRC_Init(&hcrc) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN CRC_Init 2 */
-
-  /* USER CODE END CRC_Init 2 */
-
 }
 
 /**

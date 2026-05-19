@@ -7,6 +7,13 @@
 extern "C" {
 #endif
 
+#define CMD_WRITE_FLASH 0x01
+#define CMD_REBOOT      0x05
+#define CHUNK_SIZE      512
+#define PACKET_SIZE     522
+#define ACK_BYTE        0x79
+#define NACK_BYTE       0x15
+
 typedef enum {
     PACKET_TYPE_START,
     PACKET_TYPE_DATA,
@@ -18,19 +25,16 @@ typedef struct __attribute__((packed)){
     uint8_t type;
     uint32_t block_num;
     uint32_t len;
-    uint8_t  payload[512];
+    uint8_t  payload[CHUNK_SIZE];
     uint32_t crc;
-} OTA_Packet_t;
+} OTA_Packet_t; // 522 bytes total
 
 typedef struct {
-    uint32_t magic_number;  // e.g., 0xDEADBEEF to verify it's a valid update
-    uint32_t image_size;    // Total size in bytes
-    uint32_t image_crc;     // CRC32 of the application data
-    char version[16];       // "v1.0.2"
+    uint32_t magic_number;
+    uint32_t image_size;
+    uint32_t image_crc;
+    char version[16];
 } AppHeader_t;
-
-#define CMD_WRITE_FLASH 0x01
-#define CMD_REBOOT      0x05
 
 #ifdef __cplusplus
 }

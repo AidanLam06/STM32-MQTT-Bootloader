@@ -21,6 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <stdio.h>
 #include "flash_layout.h"
 /* USER CODE END Includes */
 
@@ -31,7 +32,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define MAX_RETRIES (5)
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -109,8 +110,8 @@ void MX_CRC_Init(void) {
 }
 
 uint8_t verify_crc(OTA_Packet_t *packet) {
-	uint32_t calculated = HAL_CRC_Calculate(&hcrc, (uint32_t*)packet, 522);
-	return (calculated == packet->crc) ? 0 : 1;
+	uint32_t calculated = HAL_CRC_Calculate(&hcrc, (uint32_t*)packet, 524);
+	return (calculated == packet->crc) ? 1 : 0;
 }
 
 /* USER CODE END 0 */
@@ -152,16 +153,73 @@ int main(void)
   static OTA_Packet_t packet_buffer;
 
   HAL_UART_Transmit(&huart2, (uint8_t *)"Inside Bootloader\r\n", 21, 100);
-  while (__HAL_UART_GET_FLAG(&huart2, UART_FLAG_TC) == RESET);
+  //while (__HAL_UART_GET_FLAG(&huart2, UART_FLAG_TC) == RESET);
 
-  HAL_StatusTypeDef status = HAL_UART_Receive(&huart1, buffer, 526, 5000);
-  if (packet_buffer.type == PACKET_TYPE_START) {
-	  if (status == HAL_OK) { // need to also add &&
-		  HAL_UART_Transmit(&huart2, (uint8_t *)"Received UART Traffic\r\n", 25, 100);
-		  while (__HAL_UART_GET_FLAG(&huart2, UART_FLAG_TC) == RESET);
+  HAL_StatusTypeDef status = HAL_UART_Receive(&huart1, (uint8_t *)&packet_buffer, sizeof(OTA_Packet_t), 5000);
+  if (status == HAL_OK) {
+	  if (packet_buffer.type == PACKET_TYPE_START) {
+		  HAL_UART_Transmit(&huart2, (uint8_t *)"Received UART start packet\r\n", 25, 100);
+		  //while (__HAL_UART_GET_FLAG(&huart2, UART_FLAG_TC) == RESET);
+
+		  HAL_StatusTypeDef erase_status = Bootloader_EraseTargetBank();
+
+		  if (erase_status != HAL_OK) {
+			  uint8_t nack = NACK_BYTE;
+			  HAL_UART_Transmit(&huart1, &nack, 1, 100);
+			  HAL_UART_Transmit(&huart2, (uint8_t*)"Bank 2 erase failed. Jumping to app..\r\n", 39, 100);
+			  jumpToApplication();
+		  }
+
 		  uint8_t ack = 0x79;
 		  HAL_UART_Transmit(&huart1, &ack, 1, 100);
 		  // add update mode code below this comment, prolly while loop and break when PACKET_TYPE_STOP detected
+
+		  uint32_t expected_block = 0;
+		  uint8_t update_running = 1;
+		  uint8_t retries_left = MAX_RETRIES; // STM32 will try to receive a UART transmission 5 times before quitting update and jumping to app
+		  char debug_msg[64];
+
+		  while (update_running) {
+			  HAL_StatusTypeDef rx_status = HAL_UART_Receive(&huart1, (uint8_t *)&packet_buffer, sizeof(OTA_Packet_t), 5000);
+
+			  if (rx_status != HAL_OK) {
+				  retries_left--;
+				  snprintf(debug_msg, sizeof(debug_msg), "UART Timeout. Retries left: %d\r\n", retries_left);
+				  HAL_UART_Transmit(&huart2, (uint8_t *)debug_msg, str_len(debug_msg), 100);
+
+				  if (retries_left <= 0) {
+					  HAL_UART_Transmit(&huart2, (uint8_t *)"Critical failure: No response from ESP32. Booting app..\r\n", 57, 100);
+					  jumpToAppliation();
+				  }
+				  continue;
+			  }
+
+
+			  if (packet_buffer.start_byte != 0xAA || !verify_crc(&packet_buffer)) {
+				  retries_left--;
+
+				  snprintf(debug_msg, sizeof(debug_msg), "CRC mismatch. Retries left: %d\r\n", retries_left);
+				  HAL_UART_Transmit(&huart2, (uint8_t *)debug_msg, strlen(debug_msg), 100);
+
+				  if (retries_left <= 0) {
+					  HAL_UART_Transmit(&huart2, (uint8_t *)"Critical failure: Too many corrupted packets. Booting app..\r\n", 61, 100);
+					  jumpToApplication();
+				  }
+				  uint8_t nack = NACK_BYTE;
+				  HAL_UART_Transmit(&huart1, &nack, 1, 100);
+				  continue;
+			  }
+
+			  retries_left = MAX_RETRIES;
+
+			  switch (packet_buffer.type) {
+			  	  case PACKET_TYPE_DATA:
+			  		  // add flash logic
+
+			  	  case PACKET_TYPE_COMPLETE:
+			  		  // add app header crc validation and bank swap + jump to new
+			  }
+		  }
 		  // make sure to add verify_crc() call for this
 		  // flash function needed here, pass the block_num and data
 	  } else {

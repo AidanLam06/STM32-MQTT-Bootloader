@@ -10,7 +10,7 @@ extern "C" {
 #define CMD_WRITE_FLASH 0x01
 #define CMD_REBOOT      0x05
 #define CHUNK_SIZE      512
-#define PACKET_SIZE     522
+#define PACKET_SIZE     524
 #define ACK_BYTE        0x79
 #define NACK_BYTE       0x15
 
@@ -23,6 +23,7 @@ typedef enum {
 typedef struct __attribute__((packed)){
     uint8_t start_byte; // always 0xAA
     uint8_t type;
+    uint8_t reserved[2] // padding for HAL_CRC_Caluclate which operates in 4 byte chunks
     uint32_t block_num;
     uint32_t len;
     uint8_t  payload[CHUNK_SIZE];
